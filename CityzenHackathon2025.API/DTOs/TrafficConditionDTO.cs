@@ -1,0 +1,20 @@
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
+namespace CityzenHackathon2025.API.DTOs
+{
+    public class TrafficConditionDTO
+    {
+#nullable disable
+        [DisplayName("Latitude : ")]
+        public string Latitude { get; set; }
+        [DisplayName("Longitude : ")]
+        public string Longitude { get; set; }
+        [DisplayName("Traffic Condition Date : ")]
+        public DateTime DateCondition { get; set; }
+        [DisplayName("Congestion Level : ")]
+        public string CongestionLevel { get; set; }
+        [DisplayName("Incident Type : ")]
+        public string IncidentType { get; set; }
+    }
+}

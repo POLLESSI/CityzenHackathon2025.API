@@ -1,0 +1,27 @@
+﻿using Microsoft.AspNetCore.SignalR;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using CitizenHackathon2025.DAL.Entities;
+using System.Diagnostics;
+using Microsoft.Extensions.Logging;
+
+namespace CityzenHackathon2025.API.Hubs
+{
+    public class TrafficHub : Hub
+    {
+#nullable disable
+
+        private readonly ILogger<TrafficHub> _logger;
+
+        public TrafficHub(ILogger<TrafficHub> logger)
+        {
+            _logger = logger;
+        }
+
+        public async Task RefreshTraffic()
+        {
+            _logger.LogInformation("RefreshTraffic called");
+            await Clients.All.SendAsync("notifynewtraffic");
+        }
+    }
+}

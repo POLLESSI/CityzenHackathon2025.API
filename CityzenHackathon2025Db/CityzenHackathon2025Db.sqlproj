@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{d0a5389c-b752-4078-852e-b6f1e4098a95}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql160DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql150DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -57,5 +57,17 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Tables" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Tables\WeatherForecast.sql" />
+    <Build Include="Tables\Place.sql" />
+    <Build Include="Tables\Event.sql" />
+    <Build Include="Tables\TrafficCondition.sql" />
+    <Build Include="Tables\Suggestion.sql" />
+    <Build Include="Tables\User.sql" />
+    <Build Include="Tables\GptInteractions.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CityzenHackathon2025Db.publish.xml" />
   </ItemGroup>
 </Project>

@@ -1,4 +1,11 @@
+using System.Numerics;
+using CitizenHackathon2025.DAL.Entities;
+using CitizenHackathon2025.DAL.Interfaces;
+using CitizenHackathon2025.DAL.Repositories;
+using CityzenHackathon2025.API.Hubs;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace CityzenHackathon2025.API.Controllers;
 
@@ -6,27 +13,38 @@ namespace CityzenHackathon2025.API.Controllers;
 [Route("[controller]")]
 public class WeatherForecastController : ControllerBase
 {
-    private static readonly string[] Summaries = new[]
-    {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+    private readonly IWeatherRepository _weatherRepository;
+    private readonly IHubContext<WeatherForecastHub> _hubContext;
 
-    private readonly ILogger<WeatherForecastController> _logger;
-
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    public WeatherForecastController(IWeatherRepository weatherRepository, IHubContext<WeatherForecastHub> hubContext)
     {
-        _logger = logger;
+        _weatherRepository = weatherRepository;
+        _hubContext = hubContext;
     }
 
-    [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<WeatherForecast> Get()
+    [HttpGet("latest")]
+    public async Task<IActionResult> GetLatestWeatherForecast()
     {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+        var forecast = await _weatherRepository.GetLatestWeatherForecastAsync();
+        if (forecast == null)
         {
-            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-        })
-        .ToArray();
+            return NotFound();
+        }
+        return Ok(forecast);
     }
+    //[HttpPost]
+    //public async Task<IActionResult> SaveWeatherForecast([FromBody] WeatherForecast forecast)
+    //{
+    //    //if (!ModelState.IsValid)
+    //    //    return BadRequest(ModelState);
+    //    //var savedForecast = await _weatherRepository.SaveWeatherForecastAsync(forecast);
+
+    //    //if (savedForecast == null)
+    //    //    return StatusCode(500, "Erreur lors de l'enregistrement");
+
+    //    // Broadcast clients SignalR
+    //    //await _hubContext.Clients.All.SendAsync("NewWeatherForecast", savedForecast);
+
+    //    return Ok(savedForecast);
+    //}
 }

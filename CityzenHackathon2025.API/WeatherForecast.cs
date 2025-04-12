@@ -12,5 +12,7 @@ namespace CityzenHackathon2025.API
         public double? RainfallMm { get; set; }
         public int? Humidity { get; set; }
         public double WindSpeedKmh { get; set; }
+        public object Location { get; internal set; }
+        public object Id { get; internal set; }
     }
 }
