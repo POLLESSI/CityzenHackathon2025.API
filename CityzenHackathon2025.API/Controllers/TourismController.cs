@@ -21,7 +21,7 @@ namespace CityzenHackathon2025.API.Controllers
         public async Task<IActionResult> GetSuggestions([FromBody] TouristicPromptDto dto)
         {
             if (string.IsNullOrWhiteSpace(dto.Prompt))
-                return BadRequest("Le prompt ne peut pas être vide.");
+                return BadRequest("The prompt cannot be empty.");
 
             var response = await _aiService.GetTouristicSuggestionsAsync(dto.Prompt);
 

@@ -15,6 +15,8 @@ namespace CityzenHackathon2025.API.DTOs
         [DisplayName("Event Date : ")]
         public DateTime DateEvent { get; set; }
         [DisplayName("Expected Crowd : ")]
-        public string ExpectedCrowd { get; set; }
+        public string? ExpectedCrowd { get; set; }
+        [DisplayName("Is Outdoor : ")]
+        public string IsOutdoor { get; set; }
     }
 }

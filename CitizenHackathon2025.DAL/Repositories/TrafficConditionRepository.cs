@@ -12,15 +12,23 @@ namespace CitizenHackathon2025.DAL.Repositories
     public class TrafficConditionRepository : ITrafficConditionRepository
     {
     #nullable disable
-        private readonly SqlConnection _connection;
+        private readonly IDbConnection _connection;
+
+        public TrafficConditionRepository(IDbConnection connection)
+        {
+            _connection = connection;
+        }
+
         public async Task<IEnumerable<TrafficCondition?>> GetLatestTrafficConditionAsync()
         {
             try
             {
-                string sql = " SELECT * FROM TrafficCondition Where Active = 1";
-
-                var trafficConditions = await _connection.QueryAsync<TrafficCondition?>(sql);
-                return [.. trafficConditions];
+                const string sql = @"
+            SELECT TOP 10 * FROM TrafficCondition
+            WHERE Active = 1
+            ORDER BY DateCondition DESC";
+                var list = await _connection.QueryAsync<TrafficCondition>(sql);
+                return list;
             }
             catch (Exception ex)
             {
@@ -33,8 +41,13 @@ namespace CitizenHackathon2025.DAL.Repositories
         {
             try
             {
-                string sql = "INSERT INTO TrafficCondition (Latitude, Longitude, DateCondition, CongestionLevel, IncidentType)" +
-                "VALUES (@Latitude, @Longitude, @DateCondition, @CongestionLevel, @IncidentType)";
+                const string sql = @"
+                INSERT INTO TrafficCondition
+                (Latitude, Longitude, DateCondition, CongestionLevel, IncidentType, Active)
+                VALUES
+                (@Latitude, @Longitude, @DateCondition, @CongestionLevel, @IncidentType, 1);
+                SELECT CAST(SCOPE_IDENTITY() AS int)";
+
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@Latitude", trafficCondition.Latitude);
                 parameters.Add("@Longitude", trafficCondition.Longitude);
@@ -42,13 +55,13 @@ namespace CitizenHackathon2025.DAL.Repositories
                 parameters.Add("@CongestionLevel", trafficCondition.CongestionLevel);
                 parameters.Add("@IncidentType", trafficCondition.IncidentType);
 
-                int rowsAffected = await _connection.ExecuteAsync(sql, parameters);
-                return null;
+                var newId = await _connection.ExecuteScalarAsync<int>(sql, parameters);
+                trafficCondition.Id = newId; // Fix: Assign the new ID to the trafficCondition object instead of parameters
+                return trafficCondition;
             }
             catch (Exception ex)
             {
-
-                Console.WriteLine($"Error adding Traffic Traffic Condition: {ex.ToString()}");
+                Console.WriteLine($"Error adding Traffic Condition: {ex}");
                 return null;
             }
         }

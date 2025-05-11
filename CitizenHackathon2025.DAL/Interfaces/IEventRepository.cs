@@ -14,5 +14,8 @@ namespace CitizenHackathon2025.DAL.Interfaces
     #nullable disable
         Task<IEnumerable<Event?>> GetLatestEventAsync();
         Task<Event> SaveEventAsync(Event @event);
+        Task<Event> CreateEventAsync(Event newEvent);
+        Task<IEnumerable<Event>> GetUpcomingOutdoorEventsAsync();
+        Task<Event?> GetByIdAsync(int id);
     }
 }

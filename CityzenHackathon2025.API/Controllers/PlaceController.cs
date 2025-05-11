@@ -35,7 +35,7 @@ namespace CityzenHackathon2025.API.Controllers
             var savedPlace = await _placeRepository.SavePlaceAsync(@place); // 👈 correction du paramètre
 
             if (savedPlace == null)
-                return StatusCode(500, "Erreur lors de l'enregistrement");
+                return StatusCode(500, "Registration Error");
 
             // ✅ Diffusion en temps réel
             await _hubContext.Clients.All.SendAsync("NewPlace", savedPlace);

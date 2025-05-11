@@ -17,7 +17,13 @@ namespace CitizenHackathon2025.DAL.Repositories
     public class PlaceRepository : IPlaceRepository
     {
     #nullable disable
-        private readonly SqlConnection _connection;
+        private readonly IDbConnection _connection;
+
+        public PlaceRepository(IDbConnection connection)
+        {
+            _connection = connection;
+        }
+
         public async Task<IEnumerable<Place?>> GetLatestPlaceAsync()
         {
             try

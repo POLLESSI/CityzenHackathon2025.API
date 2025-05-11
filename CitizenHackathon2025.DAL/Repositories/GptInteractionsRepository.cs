@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +11,14 @@ namespace CitizenHackathon2025.DAL.Repositories
 {
     public class GptInteractionsRepository
     {
-#nullable disable
-        private readonly SqlConnection _connection;
+    #nullable disable
+        private readonly IDbConnection _connection;
+
+        public GptInteractionsRepository(IDbConnection connection)
+        {
+            _connection = connection;
+        }
+
         public async Task SaveInteractionAsync(string prompt, string gptResponse)
         {
             string sql = "INSERT INTO GptInteractions (Id, Prompt, Response) VALUES (@Id, @Prompt, @Response)";

@@ -16,7 +16,13 @@ namespace CitizenHackathon2025.DAL.Repositories
     public class SuggestionRepository : ISuggestionRepository
     {
     #nullable disable
-        private readonly SqlConnection _connection;
+        private readonly IDbConnection _connection;
+
+        public SuggestionRepository(IDbConnection connection)
+        {
+            _connection = connection;
+        }
+
         public async Task<IEnumerable<Suggestion?>> GetLatestSuggestionAsync()
         {
             try

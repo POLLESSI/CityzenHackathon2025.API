@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace CityzenHackathon2025.API.DTOs
+namespace CityzenHackathon2025.Shared.DTOs
 {
     public class TrafficConditionDTO
     {
-#nullable disable
+    #nullable disable
         [DisplayName("Latitude : ")]
         public string Latitude { get; set; }
         [DisplayName("Longitude : ")]

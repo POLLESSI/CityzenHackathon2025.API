@@ -18,8 +18,8 @@
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.36" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.1" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.1" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
     <PackageReference Include="OpenAI" Version="2.1.0" />
+    <PackageReference Include="Polly" Version="8.5.2" />
     <PackageReference Include="SqlConnection" Version="1.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -30,6 +30,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CitizenHackathon2025.BLL\CitizenHackathon2025.BLL.csproj" />
     <ProjectReference Include="..\CitizenHackathon2025.DAL\CitizenHackathon2025.DAL.csproj" />
+    <ProjectReference Include="..\CitizenHackathon2025.Shared\CitizenHackathon2025.Shared.csproj" />
   </ItemGroup>
 
 </Project>

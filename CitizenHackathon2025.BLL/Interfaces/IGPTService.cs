@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-//using CitizenHackathon2025.DAL.Entities;
-//using static CitizenHackathon2025.DAL.Entities.TrafficCondition;
+using CitizenHackathon2025.DAL.Entities;
 
 namespace CitizenHackathon2025.BLL.Interfaces
 {
     public interface IGPTService
     {
-        Task<string> GetSuggestionsAsync(string prompt);
+        Task<IEnumerable<Suggestion>> GetAllSuggestionsAsync();
+        Task<IEnumerable<Suggestion>> GetSuggestionsByEventIdAsync(int id);
+        Task<IEnumerable<Suggestion>> GetSuggestionsByForecastIdAsync(int id);
+        Task<IEnumerable<Suggestion>> GetSuggestionsByTrafficIdAsync(int id);
+        Task SaveSuggestionAsync(Suggestion suggestion);
+        Task DeleteSuggestionAsync(int id);
     }
 }

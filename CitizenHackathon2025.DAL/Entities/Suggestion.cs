@@ -3,6 +3,7 @@ namespace CitizenHackathon2025.DAL.Entities
 {
     public class Suggestion
     {
+    #nullable disable
         public int Id { get; set; }
         public int UserId { get; set; }
         public DateTime DateSuggestion { get; set; }

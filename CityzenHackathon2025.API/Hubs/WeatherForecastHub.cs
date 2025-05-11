@@ -18,10 +18,10 @@ namespace CityzenHackathon2025.API.Hubs
             _logger = logger;
         }
 
-        public async Task RefreshWeatherForecast()
+        public async Task RefreshWeatherForecast(WeatherForecast forecast)
         {
             _logger.LogInformation("NotifyNewWeatherForecast called");
-            await Clients.All.SendAsync("NewWeatherForecast");
+            await Clients.All.SendAsync("NewWeatherForecast", forecast);
         }
     }
 }

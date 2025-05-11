@@ -14,5 +14,8 @@ namespace CitizenHackathon2025.BLL.Interfaces
 #nullable disable
         Task<IEnumerable<Event?>> GetLatestEventAsync();
         Task<Event> SaveEventAsync(Event @event);
+        Task<IEnumerable<Event>> GetUpcomingOutdoorEventsAsync();
+        Task<Event> CreateEventAsync(Event newEvent);
+        Task<Event?> GetByIdAsync(int id);
     }
 }

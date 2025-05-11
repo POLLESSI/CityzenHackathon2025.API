@@ -24,10 +24,10 @@ namespace CitizenHackathon2025.BLL.Services
         {
             var request = new
             {
-                model = "gpt-4o", // ou gpt-4o-mini si tu y as accès
+                model = "gpt-4o", // or gpt-4o-mini if ​​you have access to it
                 messages = new[]
                 {
-                new { role = "system", content = "Tu es un assistant touristique intelligent." },
+                new { role = "system", content = "You are a smart tourist assistant." },
                 new { role = "user", content = prompt }
             },
                 temperature = 0.2

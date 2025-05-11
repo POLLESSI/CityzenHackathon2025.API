@@ -6,6 +6,7 @@
 	[Longitude] DECIMAL(9, 3),
 	[DateEvent] DATE,
 	[ExpectedCrowd] INT,
+	[IsOutdoor] BIT,
 	[Active] BIT DEFAULT 1
 
 	CONSTRAINT [PK_Event] PRIMARY KEY ([Id])

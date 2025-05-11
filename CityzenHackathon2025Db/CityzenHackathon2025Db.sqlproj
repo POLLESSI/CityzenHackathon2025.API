@@ -57,6 +57,11 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Tables" />
+    <Folder Include="Scripts" />
+    <Folder Include="Programmability" />
+    <Folder Include="Programmability\Functions" />
+    <Folder Include="Programmability\Procedures" />
+    <Folder Include="Programmability\Procedures\spAuth" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\WeatherForecast.sql" />
@@ -66,8 +71,13 @@
     <Build Include="Tables\Suggestion.sql" />
     <Build Include="Tables\User.sql" />
     <Build Include="Tables\GptInteractions.sql" />
+    <Build Include="Tables\CrowdInfo.sql" />
+    <Build Include="Programmability\Functions\fHasher.sql" />
+    <Build Include="Programmability\Procedures\spAuth\sqlUserLogin.sql" />
+    <Build Include="Programmability\Procedures\spAuth\sqlUserRegister.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CityzenHackathon2025Db.publish.xml" />
+    <None Include="Scripts\SeedData.sql" />
   </ItemGroup>
 </Project>

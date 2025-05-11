@@ -12,12 +12,12 @@ using Microsoft.Extensions.Logging;
 
 namespace CitizenHackathon2025.DAL.Repositories
 {
-    public class WeatherRepository : IWeatherRepository
+    public class WeatherForecastRepository : IWeatherForecastRepository
     {
-#nullable disable
-        private readonly SqlConnection _connection;
+    #nullable disable
+        private readonly IDbConnection _connection;
 
-        public WeatherRepository(SqlConnection connection)
+        public WeatherForecastRepository(IDbConnection connection)
         {
             _connection = connection;
         }
@@ -26,12 +26,13 @@ namespace CitizenHackathon2025.DAL.Repositories
         {
             try
             {
-                string sql = " SELECT * FROM WeatherForecast Where Active = 1";
+                string sql = "SELECT * FROM WeatherForecast WHERE Active = 1";
 
-                var weatherForecasts = await _connection.QueryAsync<WeatherForecast?>(sql);
-                    //.OrderByDescending(w => w.Date)
-                    //.FirstOrDefaultAsync();
-                return null;
+                var weatherForecasts = await _connection.QueryAsync<WeatherForecast>(sql);
+
+                return weatherForecasts
+                    .OrderByDescending(w => w.DateWeather)
+                    .FirstOrDefault();
             }
             catch (Exception ex)
             {
@@ -89,6 +90,62 @@ namespace CitizenHackathon2025.DAL.Repositories
                 return null;
             }
 
+        }
+
+        public async Task<List<WeatherForecast>> GetAllAsync()
+        {
+            try
+            {
+                string sql = " SELECT TOP 10 * FROM WeatherForecast Where Active = 1 ORDER BY DateEvent DESC";
+
+                var weatherForecasts = await _connection.QueryAsync<WeatherForecast?>(sql);
+                return [.. weatherForecasts];
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error retrieving WeatherForecasts: {ex.Message}");
+                return [];
+            }
+        }
+        public async Task<WeatherForecast> GenerateNewForecastAsync()
+        {
+            var forecast = new WeatherForecast
+            {
+                DateWeather = DateTime.Now,
+                TemperatureC = "_rng.Next(-5, 35)",
+                Summary = "Genered",
+                RainfallMm = "Math.Round(_rng.NextDouble() * 20, 1)",
+                Humidity = "_rng.Next(30, 100)",
+                WindSpeedKmh = "Math.Round(_rng.NextDouble() * 80, 1)"
+            };
+
+            await SaveWeatherForecastAsync(forecast);
+            return forecast;
+        }
+
+        public async Task<List<WeatherForecast>> GetHistoryAsync(int limit = 128)
+        {
+            try
+            {
+                const string sql = @"
+                        SELECT * 
+                        FROM WeatherForecast
+                        WHERE Active = 1
+                        ORDER BY DateWeather DESC";
+
+                var results = await _connection.QueryAsync<WeatherForecast>(sql, new { Limit = limit });
+                return results.ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erreur lors de la récupération de l'historique météo : {ex.Message}");
+                return new List<WeatherForecast>(); 
+            }
+        }
+
+        public Task<List<WeatherForecast>> GetHistoryAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }

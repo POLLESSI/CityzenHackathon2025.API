@@ -11,6 +11,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CitizenHackathon2025.BLL", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CitizenHackathon2025.DAL", "CitizenHackathon2025.DAL\CitizenHackathon2025.DAL.csproj", "{A332A81B-1C0A-4957-A933-3DDDBAD2D809}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CitizenHackathon2025.Shared", "CitizenHackathon2025.Shared\CitizenHackathon2025.Shared.csproj", "{B799EEC6-0BE7-4AB2-9E79-733701451A9B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CitizenHackathon2025.DAL.Entities", "CitizenHackathon2025.DAL.Entities\CitizenHackathon2025.DAL.Entities.csproj", "{0984B188-2241-40CE-98B5-92B47D9A1DF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CitizenHackathon2025.Blazor.Client", "CitizenHackathon2025.Blazor.Client\CitizenHackathon2025.Blazor.Client\CitizenHackathon2025.Blazor.Client.csproj", "{C584CF92-B716-4385-B69D-B0DDAAAE1CBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CitizenHackathon2025.Blazor.Client.Client", "CitizenHackathon2025.Blazor.Client\CitizenHackathon2025.Blazor.Client.Client\CitizenHackathon2025.Blazor.Client.Client.csproj", "{E9932FB5-AED8-4249-9478-1E395DEAF298}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +43,22 @@ Global
 		{A332A81B-1C0A-4957-A933-3DDDBAD2D809}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A332A81B-1C0A-4957-A933-3DDDBAD2D809}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A332A81B-1C0A-4957-A933-3DDDBAD2D809}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B799EEC6-0BE7-4AB2-9E79-733701451A9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B799EEC6-0BE7-4AB2-9E79-733701451A9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B799EEC6-0BE7-4AB2-9E79-733701451A9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B799EEC6-0BE7-4AB2-9E79-733701451A9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0984B188-2241-40CE-98B5-92B47D9A1DF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0984B188-2241-40CE-98B5-92B47D9A1DF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0984B188-2241-40CE-98B5-92B47D9A1DF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0984B188-2241-40CE-98B5-92B47D9A1DF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C584CF92-B716-4385-B69D-B0DDAAAE1CBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C584CF92-B716-4385-B69D-B0DDAAAE1CBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C584CF92-B716-4385-B69D-B0DDAAAE1CBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C584CF92-B716-4385-B69D-B0DDAAAE1CBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9932FB5-AED8-4249-9478-1E395DEAF298}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9932FB5-AED8-4249-9478-1E395DEAF298}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9932FB5-AED8-4249-9478-1E395DEAF298}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9932FB5-AED8-4249-9478-1E395DEAF298}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,6 +4,7 @@ using CitizenHackathon2025.DAL.Interfaces;
 using CityzenHackathon2025.API.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.Mvc;
+using CityzenHackathon2025.API.DTOs;
 
 namespace CityzenHackathon2025.API.Controllers
 {
@@ -25,7 +26,13 @@ namespace CityzenHackathon2025.API.Controllers
             var events = await _eventRepository.GetLatestEventAsync(); // 👈 appel correct
             return Ok(events);
         }
-        [HttpPost]
+        [HttpGet("upcoming-outdoor")]
+        public async Task<IActionResult> GetOutdoorEvents()
+        {
+            var events = await _eventRepository.GetUpcomingOutdoorEventsAsync();
+            return Ok(events);
+        }
+        [HttpPost("save")]
         public async Task<IActionResult> SaveEvent([FromBody] Event @event)
         {
             if (!ModelState.IsValid)
@@ -41,5 +48,20 @@ namespace CityzenHackathon2025.API.Controllers
 
             return Ok(savedEvent);
         }
+        [HttpPost]
+        public async Task<IActionResult> CreateEvent(EventDTO dto)
+        {
+            var newEvent = new Event
+            {
+                Name = dto.Name,
+                Latitude = dto.Latitude,
+                DateEvent = dto.DateEvent,
+                IsOutdoor = dto.IsOutdoor
+            };
+
+            var created = await _eventRepository.CreateEventAsync(newEvent);
+            return CreatedAtAction(nameof(GetOutdoorEvents), new { id = created.Id }, created);
+        }
     }
 }
+

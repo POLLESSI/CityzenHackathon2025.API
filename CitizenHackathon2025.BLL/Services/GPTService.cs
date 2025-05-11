@@ -1,48 +1,62 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.SignalR.Client;
 using CitizenHackathon2025.BLL.Interfaces;
+using CitizenHackathon2025.BLL;
+using CitizenHackathon2025.DAL.Repositories;
+using CitizenHackathon2025.API.DAL.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNet.SignalR.Client;
+using Microsoft.AspNetCore.Components;
+using CitizenHackathon2025.DAL.Entities;
+//using CitizenHackathon2025.API.Hubs;
+using Microsoft.Extensions.Logging;
 
 namespace CitizenHackathon2025.BLL.Services
 {
-    public class GptService : IGPTService
+    public class GPTService : IGPTService
     {
-        private readonly HttpClient _httpClient;
-        private readonly string _apiKey = "sk-xxxxxxx";
+        private readonly IGPTRepository _gptRepository;
+        //private readonly IHubContext<SuggestionHub> _hubContext;
+        private readonly ILogger<GPTService> _logger;
 
-        public GptService(HttpClient httpClient)
+        public GPTService(IGPTRepository gptRepository, ILogger<GPTService> logger)
         {
-            _httpClient = httpClient;
+            _gptRepository = gptRepository;
+            _logger = logger;
         }
 
-        public async Task<string> GetSuggestionsAsync(string prompt)
+        public async Task<IEnumerable<Suggestion>> GetAllSuggestionsAsync()
         {
-            var request = new
-            {
-                model = "gpt-4o", // Ou "gpt-4-turbo" selon ton abonnement
-                messages = new[] {
-                new { role = "user", content = prompt }
-            },
-                temperature = 0.2
-            };
+            return await _gptRepository.GetAllSuggestionsAsync();
+        }
 
-            var content = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
+        public async Task<IEnumerable<Suggestion>> GetSuggestionsByEventIdAsync(int eventId)
+        {
+            return await _gptRepository.GetSuggestionsByEventIdAsync(eventId);
+        }
 
-            var response = await _httpClient.PostAsync("https://api.openai.com/v1/chat/completions", content);
-            response.EnsureSuccessStatusCode();
+        public async Task<IEnumerable<Suggestion>> GetSuggestionsByForecastIdAsync(int forecastId)
+        {
+            return await _gptRepository.GetSuggestionsByForecastIdAsync(forecastId);
+        }
 
-            var result = await response.Content.ReadAsStringAsync();
-            using var doc = JsonDocument.Parse(result);
-            return doc.RootElement
-                      .GetProperty("choices")[0]
-                      .GetProperty("message")
-                      .GetProperty("content")
-                      .GetString();
+        public async Task<IEnumerable<Suggestion>> GetSuggestionsByTrafficIdAsync(int trafficId)
+        {
+            return await _gptRepository.GetSuggestionsByTrafficIdAsync(trafficId);
+        }
+
+        public async Task SaveSuggestionAsync(Suggestion suggestion)
+        {
+            await _gptRepository.SaveSuggestionAsync(suggestion);
+            //await _hubContext.Clients.All.SendAsync("SuggestionAdded", suggestion);
+            _logger.LogInformation("Suggestion enregistrée et envoyée via SignalR : {@Suggestion}", suggestion);
+        }
+
+        public async Task DeleteSuggestionAsync(int suggestionId)
+        {
+            await _gptRepository.DeleteSuggestionAsync(suggestionId);
+            //await _hubContext.Clients.All.SendAsync("SuggestionDeleted", suggestionId);
+            _logger.LogInformation("Suggestion supprimée et signalée via SignalR : Id={Id}", suggestionId);
         }
     }
 }
